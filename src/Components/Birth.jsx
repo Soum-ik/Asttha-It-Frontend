@@ -1,53 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const DateOfBirth = ({ onChange, error }) => {
-  const [day, setDay] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
+  const [date, setDate] = useState({
+    day: '',
+    month: '',
+    year: '',
+  });
 
-  const handleDayChange = (event) => {
-    setDay(event.target.value);
-    onChange({ day: event.target.value, month, year });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDate((prevDate) => ({
+      ...prevDate,
+      [name]: value,
+    }));
   };
 
-  const handleMonthChange = (event) => {
-    setMonth(event.target.value);
-    onChange({ day, month: event.target.value, year });
-  };
+  useEffect(() => {
+    const { day, month, year } = date;
 
-  const handleYearChange = (event) => {
-    setYear(event.target.value);
-    onChange({ day, month, year: event.target.value });
-  };
+    if (day && month && year) {
+      const daysInMonth = new Date(year, month, 0).getDate();
+
+      if (day > daysInMonth) {
+        onChange({ error: `Invalid date: ${day}/${month}/${year}. This month has only ${daysInMonth} days.` });
+      } else {
+        onChange({ day, month, year });
+      }
+    } else {
+      onChange({ error: 'Please fill in all fields for date of birth.' });
+    }
+  }, [date, onChange]);
 
   return (
     <div className="form-group">
       <label>Date of Birth:</label>
       <div className="date-picker">
-        
-        <select id="day" value={day} onChange={handleDayChange}>
+        <select
+          name="day"
+          id="day"
+          value={date.day}
+          onChange={handleChange}
+          aria-label="Day"
+        >
           <option value="">Day</option>
-          {[...Array(31).keys()].map((day) => (
-            <option key={day + 1} value={day + 1}>
-              {day + 1}
+          {[...Array(31).keys()].map((d) => (
+            <option key={d + 1} value={d + 1}>
+              {d + 1}
             </option>
           ))}
         </select>
-        <select id="month" value={month} onChange={handleMonthChange}>
+        <select
+          name="month"
+          id="month"
+          value={date.month}
+          onChange={handleChange}
+          aria-label="Month"
+        >
           <option value="">Month</option>
-          {[...Array(12).keys()].map((month) => (
-            <option key={month + 1} value={month + 1}>
-              {month + 1}
+          {[...Array(12).keys()].map((m) => (
+            <option key={m + 1} value={m + 1}>
+              {m + 1}
             </option>
           ))}
         </select>
-        <select id="year" value={year} onChange={handleYearChange}>
+        <select
+          name="year"
+          id="year"
+          value={date.year}
+          onChange={handleChange}
+          aria-label="Year"
+        >
           <option value="">Year</option>
-          {[...Array(100).keys()]
-            .map((year) => 2023 - year)
-            .map((year) => (
-              <option key={year} value={year}>
-                {year}
+          {[...Array(20).keys()]
+            .map((y) => 2024 - y)
+            .map((y) => (
+              <option key={y} value={y}>
+                {y}
               </option>
             ))}
         </select>

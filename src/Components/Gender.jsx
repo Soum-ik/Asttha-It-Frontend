@@ -15,10 +15,10 @@ const Gender = ({ onChange, error }) => {
         <div className='checked'>
           <input
             type="radio"
-            id="female"
+            id="Female"
             name="gender"
-            value="female"
-            checked={selectedGender === 'female'}
+            value="Female"
+            checked={selectedGender === 'Female'}
             onChange={handleGenderChange}
           />
           <label htmlFor="female">Female</label>
@@ -26,10 +26,10 @@ const Gender = ({ onChange, error }) => {
         <div className='checked'>
           <input
             type="radio"
-            id="male"
+            id="Male"
             name="gender"
-            value="male"
-            checked={selectedGender === 'male'}
+            value="Male"
+            checked={selectedGender === 'Male'}
             onChange={handleGenderChange}
           />
           <label htmlFor="male">Male</label>
@@ -37,10 +37,10 @@ const Gender = ({ onChange, error }) => {
         <div className='checked'>
           <input
             type="radio"
-            id="custom"
+            id="Custom"
             name="gender"
-            value="custom"
-            checked={selectedGender === 'custom'}
+            value="Custom"
+            checked={selectedGender === 'Custom'}
             onChange={handleGenderChange}
           />
           <label htmlFor="custom">Custom</label>
